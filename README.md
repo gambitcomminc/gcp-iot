@@ -3,4 +3,6 @@ Google Cloud IoT integration
 
 cloudiot_pubsub_server_anomaly.py implements simple anomaly detection: detect values larger than a threshold.
 
-See it in action at https://mqttlab.iotsim.io/gcp
+See it in action in this Youtube video https://www.youtube.com/watch?v=UKcJe1GMHiQ
+and at https://mqttlab.iotsim.io/gcp .
+
