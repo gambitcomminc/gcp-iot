@@ -56,6 +56,7 @@ SERVICE_NAME = 'cloudiot'
 
 
 sn_set = set()
+msgs_received = 0
 
 class Server(object):
     """Represents the state of the server."""
@@ -145,6 +146,8 @@ class Server(object):
         Pub/Sub subscription.
         """
 
+	global msgs_received
+
         subscriber = pubsub.SubscriberClient()
         subscription_path = subscriber.subscription_path(
                               project_id,
@@ -155,8 +158,11 @@ class Server(object):
             subscribed topic.
             """
 
+	    global msgs_received
+
 #	    print ('DEBUG: message ' + message.data.decode('utf-8'))
 
+	    msgs_received = msgs_received + 1
             try:
                 data = json.loads(message.data.decode('utf-8'))
             except ValueError as e:
@@ -205,7 +211,11 @@ class Server(object):
         # The subscriber is non-blocking, so keep the main thread from
         # exiting to allow it to process messages in the background.
         while True:
-            time.sleep(60)
+            time.sleep(10)
+
+	    # print messages / sec
+	    print ('INFO - messages / sec ' + str(msgs_received / 10.0))
+	    msgs_received = 0
 
 
 def parse_command_line_args():
